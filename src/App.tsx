@@ -5,11 +5,6 @@ const App: React.FC = () => {
   const { tasks, addTask, removeTask, toggleComplete, newTask, setNewTask } =
     useTask();
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    setNewTask(e.target.value);
-  };
-
   return (
     <div className="App">
       <ul className="sidebar">
@@ -32,8 +27,8 @@ const App: React.FC = () => {
           <textarea
             placeholder="Add a new task"
             value={newTask}
-            onChange={handleChange}></textarea>
-          <button onClick={addTask}>Create</button>
+            onChange={(e) => setNewTask(e.target.value)}></textarea>
+          <button onClick={addTask}>Add</button>
         </div>
       </div>
     </div>
