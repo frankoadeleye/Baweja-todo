@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useTask from "src/hooks/useTasks";
+import "src/App.css";
 
-function App() {
+const App: React.FC = () => {
+  const { tasks, addTask, removeTask, toggleComplete, newTask, setNewTask } =
+    useTask();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul className="sidebar">
+        {tasks.reverse().map((task) => (
+          <li key={task.id}>
+            <div className="task-wrap">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleComplete(task.id)}
+              />
+              {task.title}
+            </div>
+            <button onClick={() => removeTask(task.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+      <div className="content">
+        <div className="input-wrap">
+          <textarea
+            placeholder="Add a new task"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}></textarea>
+          <button onClick={addTask}>Add</button>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
